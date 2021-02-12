@@ -1,0 +1,124 @@
+openapi: 3.0.0
+info:
+  title: 'Callme Web API'
+  version: 2.0.14
+paths:
+  /get_SIP_account_from_channel/:
+    post:
+      tags:
+        - Installation
+      summary: 'Returns accounts for a temporary test session.'
+      description: 'Once the test has been completed the Installer will press ''Test complete'' button and declare that the device works correctly (button OK). On OK button pressing the CallMe will call the API set_device_status(device_uid, device_status=WORKING).'
+      operationId: get_SIP_account_from_channel
+      requestBody:
+        description: 'Device uid and channel number of requested SIP account'
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - uid
+                - channel_number
+              properties:
+                uid:
+                  type: string
+                  format: uid
+                  example: URMV10603E9DF0A01D28
+                channel_number:
+                  type: integer
+                  format: int32
+                  example: '-1'
+              type: object
+      responses:
+        '200':
+          description: 'The web API''s full report results'
+          content:
+            application/json:
+              schema:
+                properties:
+                  version: { description: 'web API version', type: string, example: 2.0.0, nullable: 'false' }
+                  http_code: { description: 'the http response code', type: integer, example: '200', nullable: 'false' }
+                  result_code: { $ref: '#/components/schemas/ResultCodes' }
+                  request: { description: 'the request details', properties: { uri: { type: string, example: /login }, method: { type: string, example: GET } }, type: object, nullable: 'false' }
+                  data: { description: 'the data returned from server', properties: { credentials_username: { description: 'the sip login', type: string, example: 1060afd48c541f832440, nullable: 'false' }, credentials_password: { description: 'the sip password', type: string, example: 63115c77fbd2416c47018646d134d300b6778843, nullable: 'false' } }, type: object, nullable: 'true' }
+                type: object
+  '/get_SIP_account_from_channel/{uid}/{channel}':
+    get:
+      tags:
+        - Installation
+      summary: 'Returns SIP credentials associated to this channel number'
+      description: 'Given the uid of the ipercom device and its channel number, this api returns the login and password used to register to the SIP callme server'
+      operationId: get_SIP_account_from_channel
+      parameters:
+        -
+          name: uid
+          in: path
+          description: 'The uid of ipercom device'
+          required: true
+          schema:
+            type: string
+          example: URMV10603E9DF0A01D28
+        -
+          name: channel
+          in: path
+          description: 'The channel number of ipercom device'
+          required: true
+          schema:
+            type: integer
+          example: '-1'
+      responses:
+        '200':
+          description: 'The web API''s full report results'
+          content:
+            application/json:
+              schema:
+                properties:
+                  version: { description: 'web API version', type: string, example: 2.0.0, nullable: 'false' }
+                  http_code: { description: 'the http response code', type: integer, example: '200', nullable: 'false' }
+                  result_code: { $ref: '#/components/schemas/ResultCodes' }
+                  request: { description: 'the request details', properties: { uri: { type: string, example: /login }, method: { type: string, example: GET } }, type: object, nullable: 'false' }
+                  data: { description: 'the data returned from server', properties: { sipCredentials: { properties: { username: { description: 'the sip login', type: string, example: 1060afd48c541f832440 }, password: { description: 'the sip password', type: string, example: 63115c77fbd2416c47018646d134d300b6778843 } }, type: object, nullable: 'false' } }, type: object, nullable: 'true' }
+                type: object
+        '400':
+          description: 'Bad Request'
+components:
+  schemas:
+    ResultCodes:
+      type: string
+      enum:
+        - Success
+        - UnknownDevice
+        - UnknownDeviceStatus
+        - AccountsAlreadyCreated
+        - PermissionDenied
+        - DuplicatedSiteName
+        - BadSize
+        - BadCharset
+        - UnknownSiteId
+        - UnknownDeviceId
+        - UnknownDeviceUid
+        - UnknownChannelId
+        - UnknownChannelNumber
+        - DeviceNotWorking
+        - DeviceNotEnabled
+        - DeviceNotReplaceable
+        - DuplicatedDeviceName
+        - ReachedMaximumSharings
+        - UnknownUserId
+        - UserNotInChannel
+        - UserNotMaster
+        - UserNotValid
+        - TokenNotValid
+        - UnknownSipAccountError
+        - WarningSameEmailOnUC
+        - Fail
+      xml:
+        name: ResultCodes
+    DeviceStatus:
+      type: string
+      enum:
+        - Factory
+        - Maintenance
+        - Working
+      xml:
+        name: DeviceStatus
