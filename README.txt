@@ -66,6 +66,13 @@ https://github.com/swagger-api/swagger-ui.git
 General Open API spe.:
 https://spec.openapis.org/oas/v3.0.3
 
+Swagger hub (ACCOUNT CLOUD PERSONALE)
+https://app.swaggerhub.com/apis/hammertong/
+	e.g.:
+	https://app.swaggerhub.com/apis/hammertong/callme-web_api/2.0.14#/Installation/get_sharing_tokens
+	public (readonly) :
+	https://app.swaggerhub.com/apis/hammertong/callme-web_api/2.0.14
+
 Other resources and exmples:
 https://zircote.github.io/swagger-php/Getting-started.html#detects-values-based-on-context
 https://ivankolodiy.medium.com/how-to-write-swagger-documentation-for-laravel-api-tips-examples-5510fb392a94
@@ -83,5 +90,16 @@ https://github.com/swagger-api
 
 
 
+https://app.swaggerhub.com/apis/hammertong/callme-web_api/2.0.14
 
+PROXY:
+	#
+	# Swagger reverse proxy for api test and documentation
+	#
 
+	ProxyRequests Off
+	ProxyPreserveHost On
+	ProxyPass /api-dev/ http://127.0.0.1:9090/
+	ProxyPassReverse /api-dev/ http://127.0.0.1:9090/
+
+oqC4gY+CgVmCmalXowtGjLNKoo7wfovImN73aiDHrSj/AK9GHUBUlFHoAwfCLOO6vUEmXkP8Il48nlMv27F9FYBOQGp6A02lPRj73m+c5u/LJxzF5/eRQwm2f/IGGPNhUg4NNl2yTan5GXR1IwupYP6Wi61u545Y

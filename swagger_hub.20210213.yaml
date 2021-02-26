@@ -3,13 +3,16 @@ info:
   title: 'Callme Web API'
   version: 2.0.14
 servers:
-  - url: 'https://ucloud-dev.urmet.com/tool'
+  -
+    url: 'https://ucloud-dev.urmet.com/tool/callmeapi/private'
 paths:
-  /callmeapi/private/get_sharing_tokens/:
+  /get_sharing_tokens/:
     post:
       tags:
         - Administration
         - Installation
+      security: 
+        - cookieAuth: []
       summary: 'Returns sharing tokens associated to the requested list of channels.'
       description: 'This is an improvement of the existing get_sharing_token of single channel'
       operationId: get_sharing_tokens
@@ -36,10 +39,12 @@ paths:
                   request: { description: 'the request details', properties: { uri: { type: string, example: /login }, method: { type: string, example: GET } }, type: object, nullable: false }
                   data: { description: 'the data returned from server', properties: { sharing_token: { type: array, items: { description: 'returned entry asociated to the channel id', properties: { channel_id: { description: 'channel id', type: string, example: '1060afd48c541f832440', nullable: false }, token: { description: 'current token of the channel id', type: string, example: b4b1e05a0955e93991484803f55e58c5, nullable: false } }, type: object }, nullable: false } }, type: object, nullable: true }
                 type: object
-  /callmeapi/private/get_SIP_account_from_channel/:
+  /get_SIP_account_from_channel/:
     post:
       tags:
         - Installation
+      security: 
+        - cookieAuth: []
       summary: 'Returns accounts for a temporary test session.'
       description: 'Once the test has been completed the Installer will press ''Test complete'' button and declare that the device works correctly (button OK). On OK button pressing the CallMe will call the API set_device_status(device_uid, device_status=WORKING).'
       operationId: get_SIP_account_from_channel
@@ -75,10 +80,12 @@ paths:
                   request: { description: 'the request details', properties: { uri: { type: string, example: /login }, method: { type: string, example: GET } }, type: object, nullable: false }
                   data: { description: 'the data returned from server', properties: { credentials_username: { description: 'the sip login', type: string, example: 1060afd48c541f832440, nullable: false }, credentials_password: { description: 'the sip password', type: string, example: 63115c77fbd2416c47018646d134d300b6778843, nullable: false } }, type: object, nullable: true }
                 type: object
-  '/callmeapi/private/get_SIP_account_from_channel/{uid}/{channel}':
+  '/get_SIP_account_from_channel/{uid}/{channel}':
     get:
       tags:
         - Installation
+      security: 
+        - cookieAuth: []
       summary: 'Returns SIP credentials associated to this channel number'
       description: 'Given the uid of the ipercom device and its channel number, this api returns the login and password used to register to the SIP callme server'
       operationId: get_SIP_account_from_channel_2
@@ -116,11 +123,10 @@ paths:
           description: 'Bad Request'
 components:
   securitySchemes:
-    sessionCookie:
+    cookieAuth:
       type: apiKey
-      in: header
-      name: Cookie
-      description: Inserire il session cookie di Apache nella forma session=122345....  
+      in: cookie    # can be "header", "query" or "cookie"
+      name: session
   schemas:
     ResultCodes:
       type: string
@@ -161,7 +167,4 @@ components:
         - Working
       xml:
         name: DeviceStatus
-security:
-  - sessionCookie: []
-    
 

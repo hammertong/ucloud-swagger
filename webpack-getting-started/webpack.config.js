@@ -47,5 +47,10 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: outputPath,
+  },
+  devServer: {
+    compress: true,
+    disableHostCheck: true,   // That solved it
   }
+
 };

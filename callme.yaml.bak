@@ -3,9 +3,10 @@ info:
   title: 'Callme Web API'
   version: 2.0.14
 servers:
-  - url: 'https://ucloud-dev.urmet.com/tool'
+  -
+    url: 'https://ucloud-dev.urmet.com/tool/callmeapi/private'
 paths:
-  /callmeapi/private/get_sharing_tokens/:
+  /get_sharing_tokens/:
     post:
       tags:
         - Administration
@@ -21,8 +22,8 @@ paths:
             schema:
               type: string
             example:
-              - '106090a00c54e07f0bef'
-              - '106090a00c541f830bec'
+              - 106090a00c54e07f0bef
+              - 106090a00c541f830bec
       responses:
         '200':
           description: 'The web API''s full report results'
@@ -30,13 +31,13 @@ paths:
             application/json:
               schema:
                 properties:
-                  version: { description: 'web API version', type: string, example: 2.0.0, nullable: false }
-                  http_code: { description: 'the http response code', type: integer, example: '200', nullable: false }
+                  version: { description: 'web API version', type: string, example: 2.0.0, nullable: 'false' }
+                  http_code: { description: 'the http response code', type: integer, example: '200', nullable: 'false' }
                   result_code: { $ref: '#/components/schemas/ResultCodes' }
-                  request: { description: 'the request details', properties: { uri: { type: string, example: /login }, method: { type: string, example: GET } }, type: object, nullable: false }
-                  data: { description: 'the data returned from server', properties: { sharing_token: { type: array, items: { description: 'returned entry asociated to the channel id', properties: { channel_id: { description: 'channel id', type: string, example: '1060afd48c541f832440', nullable: false }, token: { description: 'current token of the channel id', type: string, example: b4b1e05a0955e93991484803f55e58c5, nullable: false } }, type: object }, nullable: false } }, type: object, nullable: true }
+                  request: { description: 'the request details', properties: { uri: { type: string, example: /login }, method: { type: string, example: GET } }, type: object, nullable: 'false' }
+                  data: { description: 'the data returned from server', properties: { sharing_token: { type: array, items: { description: 'returned entry asociated to the channel id', properties: { channel_id: { description: 'channel id', type: string, example: 1060afd48c541f832440, nullable: 'false' }, token: { description: 'current token of the channel id', type: string, example: b4b1e05a0955e93991484803f55e58c5, nullable: 'false' } }, type: object }, collectionFormat: multi, nullable: 'false' } }, type: object, nullable: 'true' }
                 type: object
-  /callmeapi/private/get_SIP_account_from_channel/:
+  /get_SIP_account_from_channel/:
     post:
       tags:
         - Installation
@@ -69,19 +70,19 @@ paths:
             application/json:
               schema:
                 properties:
-                  version: { description: 'web API version', type: string, example: 2.0.0, nullable: false }
-                  http_code: { description: 'the http response code', type: integer, example: '200', nullable: false }
+                  version: { description: 'web API version', type: string, example: 2.0.0, nullable: 'false' }
+                  http_code: { description: 'the http response code', type: integer, example: '200', nullable: 'false' }
                   result_code: { $ref: '#/components/schemas/ResultCodes' }
-                  request: { description: 'the request details', properties: { uri: { type: string, example: /login }, method: { type: string, example: GET } }, type: object, nullable: false }
-                  data: { description: 'the data returned from server', properties: { credentials_username: { description: 'the sip login', type: string, example: 1060afd48c541f832440, nullable: false }, credentials_password: { description: 'the sip password', type: string, example: 63115c77fbd2416c47018646d134d300b6778843, nullable: false } }, type: object, nullable: true }
+                  request: { description: 'the request details', properties: { uri: { type: string, example: /login }, method: { type: string, example: GET } }, type: object, nullable: 'false' }
+                  data: { description: 'the data returned from server', properties: { credentials_username: { description: 'the sip login', type: string, example: 1060afd48c541f832440, nullable: 'false' }, credentials_password: { description: 'the sip password', type: string, example: 63115c77fbd2416c47018646d134d300b6778843, nullable: 'false' } }, type: object, nullable: 'true' }
                 type: object
-  '/callmeapi/private/get_SIP_account_from_channel/{uid}/{channel}':
+  '/get_SIP_account_from_channel/{uid}/{channel}':
     get:
       tags:
         - Installation
       summary: 'Returns SIP credentials associated to this channel number'
       description: 'Given the uid of the ipercom device and its channel number, this api returns the login and password used to register to the SIP callme server'
-      operationId: get_SIP_account_from_channel_2
+      operationId: get_SIP_account_from_channel
       parameters:
         -
           name: uid
@@ -106,21 +107,15 @@ paths:
             application/json:
               schema:
                 properties:
-                  version: { description: 'web API version', type: string, example: 2.0.0, nullable: false }
-                  http_code: { description: 'the http response code', type: integer, example: '200', nullable: false }
+                  version: { description: 'web API version', type: string, example: 2.0.0, nullable: 'false' }
+                  http_code: { description: 'the http response code', type: integer, example: '200', nullable: 'false' }
                   result_code: { $ref: '#/components/schemas/ResultCodes' }
-                  request: { description: 'the request details', properties: { uri: { type: string, example: /login }, method: { type: string, example: GET } }, type: object, nullable: false }
-                  data: { description: 'the data returned from server', properties: { sipCredentials: { properties: { username: { description: 'the sip login', type: string, example: 1060afd48c541f832440 }, password: { description: 'the sip password', type: string, example: 63115c77fbd2416c47018646d134d300b6778843 } }, type: object, nullable: false } }, type: object, nullable: true }
+                  request: { description: 'the request details', properties: { uri: { type: string, example: /login }, method: { type: string, example: GET } }, type: object, nullable: 'false' }
+                  data: { description: 'the data returned from server', properties: { sipCredentials: { properties: { username: { description: 'the sip login', type: string, example: 1060afd48c541f832440 }, password: { description: 'the sip password', type: string, example: 63115c77fbd2416c47018646d134d300b6778843 } }, type: object, nullable: 'false' } }, type: object, nullable: 'true' }
                 type: object
         '400':
           description: 'Bad Request'
 components:
-  securitySchemes:
-    sessionCookie:
-      type: apiKey
-      in: header
-      name: Cookie
-      description: Inserire il session cookie di Apache nella forma session=122345....  
   schemas:
     ResultCodes:
       type: string
@@ -161,7 +156,3 @@ components:
         - Working
       xml:
         name: DeviceStatus
-security:
-  - sessionCookie: []
-    
-
